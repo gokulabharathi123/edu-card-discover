@@ -1,4 +1,3 @@
-
 import { Star, Users } from 'lucide-react';
 import { Course } from '../types/Course';
 
@@ -8,7 +7,14 @@ interface CourseCardProps {
 
 const CourseCard = ({ course }: CourseCardProps) => {
   const formatPrice = (price: number) => {
-    return price === 0 ? 'Free' : `$${price.toFixed(2)}`;
+    if (price === 0) return 'Free';
+    const priceInINR = (price * 83).toFixed(0);
+    return `₹${priceInINR}`;
+  };
+
+  const formatOriginalPrice = (price: number) => {
+    const priceInINR = (price * 83).toFixed(0);
+    return `₹${priceInINR}`;
   };
 
   const formatEnrollment = (count: number) => {
@@ -104,7 +110,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
             </span>
             {course.originalPrice && course.price > 0 && (
               <span className="text-sm text-gray-500 line-through">
-                ${course.originalPrice.toFixed(2)}
+                {formatOriginalPrice(course.originalPrice)}
               </span>
             )}
           </div>

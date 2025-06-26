@@ -1,7 +1,8 @@
-
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import CourseCard from '../components/CourseCard';
 import FilterBar from '../components/FilterBar';
+import Header from '../components/Header';
 import { Course } from '../types/Course';
 
 const Index = () => {
@@ -104,25 +105,20 @@ const Index = () => {
   }, [selectedCategory, priceFilter, courses]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">EduDeck</h1>
-              <p className="text-gray-600 mt-1">Discover amazing courses from top instructors</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">
-                {filteredCourses.length} courses found
-              </span>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <Header />
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Discover Amazing Courses</h1>
+          <p className="text-xl text-gray-600 mb-6">Learn from top instructors and advance your skills</p>
+          <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
+            <span>{filteredCourses.length} courses found</span>
+            <span>•</span>
+            <span>All prices in Indian Rupees (₹)</span>
           </div>
         </div>
-      </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Filter Bar */}
         <FilterBar
           selectedCategory={selectedCategory}
@@ -134,7 +130,9 @@ const Index = () => {
         {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
           {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+            <Link key={course.id} to={`/course/${course.id}`}>
+              <CourseCard course={course} />
+            </Link>
           ))}
         </div>
 
